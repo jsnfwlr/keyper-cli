@@ -126,7 +126,7 @@ func NewRun(cmd *cobra.Command, args []string) {
 	kc, err := keyper.NewClient()
 	feedback.HandleFatalErr(err)
 
-	existing, err := listKeys(kc)
+	existing, err := listKeys(kc, user)
 	feedback.HandleFatalErr(err)
 
 	var nkk keyper.SSHPublicKey
@@ -151,6 +151,38 @@ func NewRun(cmd *cobra.Command, args []string) {
 	nkk.Name = comment
 	nkk.Key = strings.TrimSpace(pk)
 	nkk.Fingerprint = fp
+
+	if len(nkk.HostGroups) == 0 {
+		usr, err := kc.GetUser(user)
+		feedback.HandleFatalErr(err)
+
+		options := []string{}
+		for _, hg := range usr.Groups {
+			g := hg.Parse()
+			options = append(options, g.CN)
+		}
+
+		slices.Sort(options)
+
+		prompt := prompter.New()
+		for {
+			sel, err := prompt.Select("Select the host group for the key", false, options...)
+			feedback.HandleFatalErr(err)
+
+			for _, hg := range usr.Groups {
+				g := hg.Parse()
+				if g.CN == sel {
+					nkk.HostGroups = append(nkk.HostGroups, hg)
+					break
+				}
+			}
+
+			if !prompt.Bool("Add another host group?", true) {
+				break
+			}
+
+		}
+	}
 
 	err = kc.AddSSHKey(user, nkk)
 	feedback.HandleFatalErr(err)

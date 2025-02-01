@@ -5,15 +5,25 @@ import (
 	"os"
 	"time"
 
+	"github.com/jsnfwlr/go-user"
 	"github.com/jsnfwlr/keyper-cli/internal/feedback"
 	"github.com/jsnfwlr/keyper-cli/internal/feedback/style"
 	"github.com/jsnfwlr/keyper-cli/internal/keyper"
 
-	"github.com/jsnfwlr/go-user"
 	"github.com/spf13/cobra"
 )
 
 func init() {
+	defaultUsername := ""
+
+	u, _ := user.Username()
+
+	if u != "" {
+		defaultUsername = u
+	}
+
+	ListCmd.Flags().StringP("user", "u", defaultUsername, "specifies th user on the Keyper server to add the key to\n   ")
+
 	BaseCmd.AddCommand(ListCmd)
 }
 
@@ -24,10 +34,13 @@ var ListCmd = &cobra.Command{
 }
 
 func ListRun(cmd *cobra.Command, args []string) {
+	user, err := cmd.Flags().GetString("user")
+	feedback.HandleFatalErr(err)
+
 	kc, err := keyper.NewClient()
 	feedback.HandleFatalErr(err)
 
-	keys, err := listKeys(kc)
+	keys, err := listKeys(kc, user)
 	feedback.HandleFatalErr(err)
 
 	feedback.Print(feedback.Info, false, "SSH keys:")
@@ -44,18 +57,13 @@ func ListRun(cmd *cobra.Command, args []string) {
 	}
 }
 
-func listKeys(kc *keyper.Client) (keys []keyper.SSHPublicKey, err error) {
-	u, err := user.Username()
-	if err != nil {
-		return nil, fmt.Errorf("could not get username: %[1]w", err)
-	}
-
+func listKeys(kc *keyper.Client, user string) (keys []keyper.SSHPublicKey, err error) {
 	h, err := os.Hostname()
 	if err != nil {
 		return nil, fmt.Errorf("could not get hostname: %[1]w", err)
 	}
 
-	k, err := kc.GetSSHKeys(u, h)
+	k, err := kc.GetSSHKeys(user, h)
 	if err != nil {
 		return nil, fmt.Errorf("could not get keys: %[1]w", err)
 	}

@@ -37,33 +37,6 @@ import (
 
 ]
 */
-type UserResponse struct {
-	AccountLocked bool           `json:"accountLocked,omitempty"`
-	CN            string         `json:"cn,omitempty"`
-	DisplayName   string         `json:"displayName,omitempty"`
-	DN            string         `json:"dn,omitempty"`
-	GivenName     string         `json:"givenName,omitempty"`
-	Mail          string         `json:"mail,omitempty"`
-	MemberOfs     []string       `json:"memberOfs,omitempty"`
-	SN            string         `json:"sn,omitempty"`
-	SSHPublicKeys []SSHPublicKey `json:"sshPublicKeys"`
-	UID           string         `json:"uid,omitempty"`
-}
-
-type DateExpire string
-
-type SSHPublicKey struct {
-	CN          string     `json:"cn,omitempty"`
-	DateExpire  DateExpire `json:"dateExpire,omitempty"`
-	Date        time.Time  `json:"-"`
-	HostGroups  []string   `json:"hostGroups,omitempty"`
-	Key         string     `json:"key"`
-	KeyId       int        `json:"keyid,omitempty"`
-	Fingerprint string     `json:"fingerprint"`
-	Name        string     `json:"name"`
-	KeyType     int        `json:"keyType,omitempty"`
-	Local       bool       `json:"-"`
-}
 
 func (d DateExpire) Parse() (time.Time, error) {
 	year := d[0:4]
@@ -77,31 +50,30 @@ func (d DateExpire) Parse() (time.Time, error) {
 }
 
 func (c *Client) GetSSHKeys(username, host string) ([]SSHPublicKey, error) {
-	var response []UserResponse
-	err := c.Do("GET", fmt.Sprintf("/api/users/%s", username), true, nil, &response)
+	response, err := c.GetUser(username)
 	if err != nil {
 		return nil, err
 	}
 
-	for i := range response[0].SSHPublicKeys {
-		date, err := response[0].SSHPublicKeys[i].DateExpire.Parse()
+	for i := range response.SSHPublicKeys {
+		date, err := response.SSHPublicKeys[i].DateExpire.Parse()
 		if err != nil {
 			return nil, err
 		}
-		response[0].SSHPublicKeys[i].Date = date
+		response.SSHPublicKeys[i].Date = date
 
-		if strings.Contains(response[0].SSHPublicKeys[i].Name, host) {
-			response[0].SSHPublicKeys[i].Local = true
+		if strings.Contains(response.SSHPublicKeys[i].Name, host) {
+			response.SSHPublicKeys[i].Local = true
 		}
 	}
 
-	return response[0].SSHPublicKeys, nil
+	return response.SSHPublicKeys, nil
 }
 
 func (c Client) RevokeSSHKey(username string, key SSHPublicKey) error {
 	response := []UserResponse{}
 
-	key.HostGroups = []string{}
+	// key.HostGroups = []Group{}
 	key.DateExpire = ""
 
 	payload := UserResponse{
