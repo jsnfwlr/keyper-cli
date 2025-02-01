@@ -3,11 +3,13 @@ package keys
 import (
 	"fmt"
 	"os"
-	"os/user"
+	"time"
 
 	"github.com/jsnfwlr/keyper-cli/internal/feedback"
 	"github.com/jsnfwlr/keyper-cli/internal/feedback/style"
 	"github.com/jsnfwlr/keyper-cli/internal/keyper"
+
+	"github.com/jsnfwlr/go-user"
 	"github.com/spf13/cobra"
 )
 
@@ -30,18 +32,22 @@ func ListRun(cmd *cobra.Command, args []string) {
 
 	feedback.Print(feedback.Info, false, "SSH keys:")
 	for _, k := range keys {
+		name := k.Name
 		if k.Local {
-			feedback.Print(feedback.Info, false, "%[1]d: %[5]s%[2]s%[6]s - %[3]s - %[4]s", k.KeyId, k.Name, k.Fingerprint, k.Date.Format("2006-01-02 15:04:05"), style.CyanFG, style.Reset)
-		} else {
-			feedback.Print(feedback.Info, false, "%[1]d: %[2]s - %[3]s - %[5]s%[4]s%[6]s", k.KeyId, k.Name, k.Fingerprint, k.Date.Format("2006-01-02 15:04:05"), style.RedFG, style.Reset)
+			name = style.Apply(name, style.CyanFG)
 		}
+		date := k.Date.Format("2006-01-02 15:04:05")
+		if k.Date.Before(time.Now()) {
+			date = style.Apply(date, style.RedFG)
+		}
+		feedback.Print(feedback.Info, false, "%d: %s - %s - %s", k.KeyId, name, k.Fingerprint, date)
 	}
 }
 
 func listKeys(kc *keyper.Client) (keys []keyper.SSHPublicKey, err error) {
-	u, err := user.Current()
+	u, err := user.Username()
 	if err != nil {
-		return nil, fmt.Errorf("could not get current user: %[1]w", err)
+		return nil, fmt.Errorf("could not get username: %[1]w", err)
 	}
 
 	h, err := os.Hostname()
@@ -49,7 +55,7 @@ func listKeys(kc *keyper.Client) (keys []keyper.SSHPublicKey, err error) {
 		return nil, fmt.Errorf("could not get hostname: %[1]w", err)
 	}
 
-	k, err := kc.GetSSHKeys(u.Username, h)
+	k, err := kc.GetSSHKeys(u, h)
 	if err != nil {
 		return nil, fmt.Errorf("could not get keys: %[1]w", err)
 	}

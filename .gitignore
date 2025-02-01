@@ -1,2 +1,4 @@
 internal/vault
 internal/**/randomart
+coverage.html
+coverage.out

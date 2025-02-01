@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"os/user"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -18,6 +17,7 @@ import (
 	"github.com/jsnfwlr/keyper-cli/internal/keys"
 	"github.com/jsnfwlr/keyper-cli/internal/prompter"
 
+	"github.com/jsnfwlr/go-user"
 	"github.com/spf13/cobra"
 	enumFlag "github.com/thediveo/enumflag/v2"
 )
@@ -30,26 +30,28 @@ func init() {
 	defaultFilename := "~/.ssh/id_<type>"
 
 	// set the default comment based on the current user and hostname
-	u, _ := user.Current()
+	u, _ := user.Username()
+
+	d, _ := user.HomeDir()
 
 	h, _ := os.Hostname()
 
-	if h != "" && u != nil && u.Username != "" {
-		defaultComment = fmt.Sprintf("%s@%s", u.Username, h)
+	if h != "" && u != "" {
+		defaultComment = fmt.Sprintf("%s@%s", u, h)
 	}
 
-	if u != nil && u.Username != "" {
-		defaultUsername = u.Username
-		defaultFilename = filepath.Join(u.HomeDir, ".ssh", "id_<type>")
+	if u != "" && d != "" {
+		defaultUsername = u
+		defaultFilename = filepath.Join(d, ".ssh", "id_<type>")
 	}
 
 	NewCmd.Flags().VarP(enumFlag.New(&keyType, "type", keys.Types(), enumFlag.EnumCaseInsensitive), "type", "t", "encryption algorithm to use for generating the key\n   ")
 	NewCmd.Flags().StringP("filename", "f", defaultFilename, "specifies the filename of the key file\n   ")
 	NewCmd.Flags().BoolP("overwrite", "o", false, "overwrite the key file if it already exists")
-	NewCmd.Flags().BoolP("no-add", "n", false, "do not add the public key to your account in keyper")
-	NewCmd.Flags().StringP("passphrase", "P", "", "specifies the passphrase to use for the key file (use \"\" for no passphrase)\n    (default {{.AppName}} will prompt for a passphrase)")
+	NewCmd.Flags().BoolP("no-add", "n", false, "do not add the public key to your account on the Keyper server")
+	NewCmd.Flags().StringP("passphrase", "P", "", "specifies the passphrase to use for the key file (use \"\" for no passphrase)\n    (if not set, {{.AppName}} will prompt for a passphrase)")
 	NewCmd.Flags().StringP("comment", "c", defaultComment, "specifies the comment to use for the key file\n   ")
-	NewCmd.Flags().StringP("user", "u", defaultUsername, "specifies the keyper user to add the key to\n   ")
+	NewCmd.Flags().StringP("user", "u", defaultUsername, "specifies th user on the Keyper server to add the key to\n   ")
 	NewCmd.Flags().IntP("bits", "b", 2048, "specifies the number of bits in the key to create.")
 
 	NewCmd.MarkFlagsMutuallyExclusive("user", "no-add")

@@ -7,11 +7,13 @@ require (
 	github.com/antchfx/xmlquery v1.4.3
 	github.com/caarlos0/env/v10 v10.0.0
 	github.com/gen2brain/beeep v0.0.0-20240516210008-9c006672e7f4
+	github.com/go-piv/piv-go/v2 v2.3.0
 	github.com/go-playground/validator/v10 v10.24.0
 	github.com/hashicorp/vault/api v1.15.0
 	github.com/hashicorp/vault/api/auth/userpass v0.8.0
 	github.com/itchyny/gojq v0.12.17
 	github.com/joho/godotenv v1.5.1
+	github.com/jsnfwlr/go-user v1.0.2
 	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.10.0

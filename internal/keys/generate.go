@@ -3,7 +3,9 @@ package keys
 import (
 	"bytes"
 	"context"
+	"crypto/ecdsa"
 	"crypto/ed25519"
+	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/rsa"
 	"encoding/pem"
@@ -18,6 +20,8 @@ func Generate(ctx context.Context, filePath, keyType, comment, passphrase string
 	var sKey any
 	var err error
 
+	justPub := false
+
 	switch keyType {
 	case "ed25519":
 		pKey, sKey, err = ed25519.GenerateKey(nil)
@@ -25,6 +29,12 @@ func Generate(ctx context.Context, filePath, keyType, comment, passphrase string
 			return "", "", fmt.Errorf("could not generate ED25519 key: %w", err)
 		}
 	case "ed25519-sk":
+		pKey, err = GetKeyFromSK(keyType, size)
+		if err != nil {
+			return "", "", fmt.Errorf("could not get ED25519-SK key: %w", err)
+		}
+
+		justPub = true
 
 	case "rsa":
 		var secretKey *rsa.PrivateKey
@@ -35,21 +45,82 @@ func Generate(ctx context.Context, filePath, keyType, comment, passphrase string
 
 		pKey = secretKey.Public()
 		sKey = secretKey
-	// case "rsa-sk":
+	case "rsa-sk":
+		pKey, err = GetKeyFromSK(keyType, size)
+		if err != nil {
+			return "", "", fmt.Errorf("could not get RSA%d-SK key: %w", size, err)
+		}
+
+		justPub = true
 	case "ecdsa":
+		var secretKey *ecdsa.PrivateKey
+		var ec elliptic.Curve
+		switch size {
+		case 256:
+			ec = elliptic.P256()
+		case 384:
+			ec = elliptic.P384()
+		case 521:
+			ec = elliptic.P521()
+		default:
+			return "", "", fmt.Errorf("unsupported ECDSA key size: %d", size)
+		}
+
+		secretKey, err = ecdsa.GenerateKey(ec, rand.Reader)
+		if err != nil {
+			return "", "", fmt.Errorf("could not generate ECDSA key: %w", err)
+		}
+
+		pKey = secretKey.Public()
+		sKey = secretKey
 
 	case "ecdsa-sk":
+		pKey, err = GetKeyFromSK(keyType, size)
+		if err != nil {
+			return "", "", fmt.Errorf("could not get ECDSA%d-SK key: %w", size, err)
+		}
+
+		justPub = true
 
 	default:
 		return "", "", fmt.Errorf("unsupported key type: %s", keyType)
 	}
+	var sshAuthKey string
+	var sha256FingerPrint string
 
-	sshAuthKey, sha256FingerPrint, err := SaveAsSSHKeyPair(ctx, pKey, sKey, filePath, comment, passphrase)
-	if err != nil {
-		return "", "", fmt.Errorf("could not generate %s key: %w", keyType, err)
+	if justPub {
+		sshAuthKey, sha256FingerPrint, err = SaveAsSSHPubKey(ctx, pKey, filePath, comment)
+		if err != nil {
+			return "", "", fmt.Errorf("could not generate %s key: %w", keyType, err)
+		}
+	} else {
+		sshAuthKey, sha256FingerPrint, err = SaveAsSSHKeyPair(ctx, pKey, sKey, filePath, comment, passphrase)
+		if err != nil {
+			return "", "", fmt.Errorf("could not generate %s key: %w", keyType, err)
+		}
 	}
 
 	return sshAuthKey, sha256FingerPrint, nil
+}
+
+func SaveAsSSHPubKey(ctx context.Context, pkey any, filePath, comment string) (sshAuthKey, fingerprint string, fault error) {
+	pubSSH, err := ssh.NewPublicKey(pkey)
+	if err != nil {
+		return "", "", fmt.Errorf("could not create public key: %w", err)
+	}
+
+	authorizedKey := ssh.MarshalAuthorizedKey(pubSSH)
+
+	ak := fmt.Sprintf("%s %s\n", string(bytes.TrimSpace(authorizedKey)), comment)
+
+	err = os.WriteFile(filePath, []byte(ak), 0o644)
+	if err != nil {
+		return "", "", fmt.Errorf("could not write to %s: %w", filePath, err)
+	}
+
+	fp := ssh.FingerprintSHA256(pubSSH)
+
+	return ak, fp, nil
 }
 
 func SaveAsSSHKeyPair(ctx context.Context, pKey, sKey any, filePath, comment, passphrase string) (sshAuthKey, fingerprint string, fault error) {
