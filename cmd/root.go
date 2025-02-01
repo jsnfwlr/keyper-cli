@@ -6,6 +6,8 @@ import (
 	"strings"
 
 	"github.com/jsnfwlr/keyper-cli/cmd/keys"
+	"github.com/jsnfwlr/keyper-cli/cmd/version"
+
 	// "github.com/jsnfwlr/keyper-cli/cmd/keygen"
 	// "github.com/jsnfwlr/keyper-cli/cmd/keygen"
 	// "github.com/jsnfwlr/keyper-cli/cmd/keygen"
@@ -20,7 +22,6 @@ import (
 )
 
 var RootCmd = &cobra.Command{
-	Version:          app.GetCurrentVersion(),
 	Use:              app.RootCmd,
 	Short:            app.RootShort,
 	Long:             app.RootLong(),
@@ -52,7 +53,7 @@ func init() {
 	RootCmd.PersistentFlags().SortFlags = false
 
 	RootCmd.AddCommand(keys.BaseCmd)
-	// RootCmd.AddCommand(version.BaseCmd)
+	RootCmd.AddCommand(version.BaseCmd)
 
 	RootCmd.PersistentFlags().Bool(app.MaxVerbosityFlagName, false, "increase the verbosity of the output to include all messages, including debug")
 	RootCmd.PersistentFlags().CountP(app.IncreaseVerbosityFlagName, app.IncreaseVerbosityFlagShort, fmt.Sprintf("increase the verbosity of the output\ncan not be used with --%[2]s\n-%[1]s adds 'Extra' messages\n-%[1]s%[1]s adds 'Extra' and 'Debug' messages", app.IncreaseVerbosityFlagShort, app.DecreaseVerbosityFlagName))
@@ -67,10 +68,10 @@ func init() {
 			ID:    "core",
 			Title: "Core Commands",
 		},
-		// {
-		// 	ID:    "extra",
-		// 	Title: "Extra Commands",
-		// },
+		{
+			ID:    "extra",
+			Title: "Extra Commands",
+		},
 
 		// &cobra.Group{
 		// 	ID:    "short",
@@ -80,8 +81,8 @@ func init() {
 
 	RootCmd.AddGroup(cmdGroups...)
 
-	RootCmd.SetHelpTemplate(app.HelpTemplate(RootCmd))
-	RootCmd.SetVersionTemplate(app.VersionTemplate(RootCmd))
+	RootCmd.SetHelpTemplate(app.HelpTemplate())
+	RootCmd.SetVersionTemplate(app.VersionTemplate())
 	RootCmd.SetUsageTemplate(app.UsageTemplate(RootCmd))
 }
 

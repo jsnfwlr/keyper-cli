@@ -21,13 +21,13 @@ const (
 	writeFile  = false
 )
 
-func HelpTemplate(cmd *cobra.Command) string {
+func HelpTemplate() string {
 	b, _ := templates.ReadFile("templates/help.tmpl")
 
 	return string(b)
 }
 
-func VersionTemplate(cmd *cobra.Command) string {
+func VersionTemplate() string {
 	b, _ := templates.ReadFile("templates/version.tmpl")
 
 	return postProcess(string(b))

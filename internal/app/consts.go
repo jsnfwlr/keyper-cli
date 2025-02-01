@@ -9,6 +9,7 @@ const (
 	ReleaseURL    = "https://github.com/jsnfwlr/keyper-cli/releases"
 	ReleaseAPI    = "https://api.github.com/repos/jsnfwlr/keyper-cli/releases/latest"
 	ReleaseFilter = ".tag_name"
+	Release
 )
 
 const (
@@ -28,7 +29,8 @@ const (
 )
 
 var (
-	buildVersion    = "v0.0.1-dev.1"
+	buildVersion    = "v0.0.1-nightly.1"
+	buildBranch     = "stable" // [ stable | beta | alpha | nightly ]
 	timeoutDuration = 10 * time.Second
 )
 

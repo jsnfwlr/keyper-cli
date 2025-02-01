@@ -1,6 +1,7 @@
 {{ printf "{{.AppName}}" }} - {{ .Short }}
   Version Installed:    {{ .Version }}
   Newest Available:     {{ latestVersion }}
+  Can Update:           {{ canUpdate }}
 {{ if (canUpdate) -}}
   Visit {{ releaseURL }} to get the latest version
 {{- end -}}
