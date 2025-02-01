@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+    <title>app tags</title>
+    <link href="https://gitlab.com/app/app/-/tags?format=atom" rel="self" type="application/atom+xml"/>
+    <link href="https://gitlab.com/app/app/-/tags" rel="alternate" type="text/html"/>
+    <id>https://gitlab.com/app/app/-/tags</id>
+    <entry>
+        <id>https://gitlab.com/app/app/-/tags/4.6.1</id>
+        <link href="https://gitlab.com/app/app/-/tags/4.6.1"/>
+        <title>4.6.1</title>
+        <summary>Release 4.6.1</summary>
+        <content type="html"></content>
+        <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+        <author>
+            <name>Developer Name</name>
+            <email></email>
+        </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.6</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.6"/>
+    <title>4.6</title>
+    <summary>Release 4.6</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.6-pre1</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.6-pre1"/>
+    <title>4.6-pre1</title>
+    <summary>First prerelease for 4.6</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.5</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.5"/>
+    <title>4.5</title>
+    <summary>Release 4.5</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.5-pre1</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.5-pre1"/>
+    <title>4.5-pre1</title>
+    <summary>First prerelease for 4.5</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.4</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.4"/>
+    <title>4.4</title>
+    <summary>Release 4.4</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.4-pre2</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.4-pre2"/>
+    <title>4.4-pre2</title>
+    <summary>Second prerelease for 4.4</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.4-pre1</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.4-pre1"/>
+    <title>4.4-pre1</title>
+    <summary>First prerelease for 4.4</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.3</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.3"/>
+    <title>4.3</title>
+    <summary>Release 4.3</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.3-pre1</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.3-pre1"/>
+    <title>4.3-pre1</title>
+    <summary>First prerelease for 4.3</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.2</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.2"/>
+    <title>4.2</title>
+    <summary>Release 4.2</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.2-pre1</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.2-pre1"/>
+    <title>4.2-pre1</title>
+    <summary>First prerelease for 4.2</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.1</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.1"/>
+    <title>4.1</title>
+    <summary>Release 4.1</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.1-pre1</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.1-pre1"/>
+    <title>4.1-pre1</title>
+    <summary>First prerelease for 4.1</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.0</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.0"/>
+    <title>4.0</title>
+    <summary>Release 4.0</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.0-pre4</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.0-pre4"/>
+    <title>4.0-pre4</title>
+    <summary>Fourth prerelease for 4.0</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.0-pre3</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.0-pre3"/>
+    <title>4.0-pre3</title>
+    <summary>Third prerelease for 4.0</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/3.5.1</id>
+    <link href="https://gitlab.com/app/app/-/tags/3.5.1"/>
+    <title>3.5.1</title>
+    <summary>Release 3.5.1</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.0-pre2</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.0-pre2"/>
+    <title>4.0-pre2</title>
+    <summary>Second prerelease for 4.0</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+    <entry>
+    <id>https://gitlab.com/app/app/-/tags/4.0-pre1</id>
+    <link href="https://gitlab.com/app/app/-/tags/4.0-pre1"/>
+    <title>4.0-pre1</title>
+    <summary>First prerelease for 4.0</summary>
+    <content type="html"></content>
+    <media:thumbnail width="40" height="40" url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png"/>
+    <author>
+        <name>Developer Name</name>
+        <email></email>
+    </author>
+    </entry>
+</feed>
