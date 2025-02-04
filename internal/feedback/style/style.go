@@ -54,83 +54,50 @@ const (
 	BrightWhiteBG   Attribute = "107"
 )
 
-func (a Attribute) Name() string {
-	switch a {
-	case Bold:
-		return "bold"
-	case Faint:
-		return "faint"
-	case Italic:
-		return "italic"
-	case Underline:
-		return "underline"
-	case BlackFG:
-		return "black foreground"
-	case RedFG:
-		return "red foreground"
-	case GreenFG:
-		return "green foreground"
-	case YellowFG:
-		return "yellow foreground"
-	case BlueFG:
-		return "blue foreground"
-	case MagentaFG:
-		return "magenta foreground"
-	case CyanFG:
-		return "cyan foreground"
-	case WhiteFG:
-		return "white foreground"
-	case BrightBlackFG:
-		return "bright black foreground"
-	case BrightRedFG:
-		return "bright red foreground"
-	case BrightGreenFG:
-		return "bright green foreground"
-	case BrightYellowFG:
-		return "bright yellow foreground"
-	case BrightBlueFG:
-		return "bright blue foreground"
-	case BrightMagentaFG:
-		return "bright magenta foreground"
-	case BrightCyanFG:
-		return "bright cyan foreground"
-	case BrightWhiteFG:
-		return "bright white foreground"
-	case BlackBG:
-		return "black background"
-	case RedBG:
-		return "red background"
-	case GreenBG:
-		return "green background"
-	case YellowBG:
-		return "yellow background"
-	case BlueBG:
-		return "blue background"
-	case MagentaBG:
-		return "magenta background"
-	case CyanBG:
-		return "cyan background"
-	case WhiteBG:
-		return "white background"
-	case BrightBlackBG:
-		return "bright black background"
-	case BrightRedBG:
-		return "bright red background"
-	case BrightGreenBG:
-		return "bright green background"
-	case BrightYellowBG:
-		return "bright yellow background"
-	case BrightBlueBG:
-		return "bright blue background"
-	case BrightMagentaBG:
-		return "bright magenta background"
-	case BrightCyanBG:
-		return "bright cyan background"
-	case BrightWhiteBG:
-		return "bright white background"
-	}
+var attributeNames = map[Attribute]string{
+	Bold:            "bold",
+	Faint:           "faint",
+	Italic:          "italic",
+	Underline:       "underline",
+	BlackFG:         "black foreground",
+	RedFG:           "red foreground",
+	GreenFG:         "green foreground",
+	YellowFG:        "yellow foreground",
+	BlueFG:          "blue foreground",
+	MagentaFG:       "magenta foreground",
+	CyanFG:          "cyan foreground",
+	WhiteFG:         "white foreground",
+	BrightBlackFG:   "bright black foreground",
+	BrightRedFG:     "bright red foreground",
+	BrightGreenFG:   "bright green foreground",
+	BrightYellowFG:  "bright yellow foreground",
+	BrightBlueFG:    "bright blue foreground",
+	BrightMagentaFG: "bright magenta foreground",
+	BrightCyanFG:    "bright cyan foreground",
+	BrightWhiteFG:   "bright white foreground",
+	BlackBG:         "black background",
+	RedBG:           "red background",
+	GreenBG:         "green background",
+	YellowBG:        "yellow background",
+	BlueBG:          "blue background",
+	MagentaBG:       "magenta background",
+	CyanBG:          "cyan background",
+	WhiteBG:         "white background",
+	BrightBlackBG:   "bright black background",
+	BrightRedBG:     "bright red background",
+	BrightGreenBG:   "bright green background",
+	BrightYellowBG:  "bright yellow background",
+	BrightBlueBG:    "bright blue background",
+	BrightMagentaBG: "bright magenta background",
+	BrightCyanBG:    "bright cyan background",
+	BrightWhiteBG:   "bright white background",
+}
 
-	return "unknown style attribute"
+func (a Attribute) Name() string {
+	if attributeNames[a] == "" {
+		return "unknown style attribute"
+	}
+	return attributeNames[a]
 }
 
 func Apply(s string, attrs ...Attribute) string {
@@ -138,13 +105,46 @@ func Apply(s string, attrs ...Attribute) string {
 		return s
 	}
 
+	parts := applyColors(attrs...)
+
+	parts = append(parts, applyDecorations(attrs...)...)
+
+	return string(Escape) + strings.Join(parts, string(Delimiter)) + string(Close) + s + string(Reset)
+}
+
+func applyColors(attrs ...Attribute) (colors []string) {
+	var fg Attribute
+	var bg Attribute
+	parts := []string{}
+
+	for _, a := range attrs {
+		if strings.Contains(a.Name(), "foreground") {
+			fg = a
+		}
+
+		if strings.Contains(a.Name(), "background") {
+			bg = a
+		}
+	}
+
+	if fg != "" {
+		parts = append(parts, string(fg))
+	}
+
+	if bg != "" {
+		parts = append(parts, string(bg))
+	}
+
+	return parts
+}
+
+func applyDecorations(attrs ...Attribute) (decorations []string) {
+	parts := []string{}
+
 	bold := false
 	faint := false
 	italic := false
 	underline := false
-
-	var fg Attribute
-	var bg Attribute
 
 	for _, a := range attrs {
 		switch a {
@@ -156,25 +156,7 @@ func Apply(s string, attrs ...Attribute) string {
 			italic = true
 		case Underline:
 			underline = true
-		case RedFG, GreenFG, YellowFG, BlueFG, MagentaFG, CyanFG:
-			if fg == "" {
-				fg = a
-			}
-		case RedBG, GreenBG, YellowBG, BlueBG, MagentaBG, CyanBG:
-			if bg == "" {
-				bg = a
-			}
 		}
-	}
-
-	parts := []string{}
-
-	if fg != "" {
-		parts = append(parts, string(fg))
-	}
-
-	if bg != "" {
-		parts = append(parts, string(bg))
 	}
 
 	if bold {
@@ -193,5 +175,5 @@ func Apply(s string, attrs ...Attribute) string {
 		parts = append(parts, string(Underline))
 	}
 
-	return string(Escape) + strings.Join(parts, string(Delimiter)) + string(Close) + s + string(Reset)
+	return parts
 }

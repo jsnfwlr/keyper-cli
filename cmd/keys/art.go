@@ -1,11 +1,7 @@
 package keys
 
 import (
-	"github.com/jsnfwlr/keyper-cli/internal/feedback"
-	"github.com/jsnfwlr/keyper-cli/internal/files"
-	"github.com/jsnfwlr/keyper-cli/internal/keys/randomart"
 	"github.com/spf13/cobra"
-	"golang.org/x/crypto/ssh"
 )
 
 func init() {
@@ -28,25 +24,25 @@ func ArtRun(cmd *cobra.Command, args []string) {
 	// pubSSH, err := ssh.NewPublicKey(pKey)
 	// feedback.HandleFatalErr(err)
 
-	f, err := cmd.Flags().GetString("filename")
-	feedback.HandleFatalErr(err)
+	// 	f, err := cmd.Flags().GetString("filename")
+	// 	feedback.HandleFatalErr(err)
 
-	b, err := files.Read(f, true)
-	feedback.HandleFatalErr(err)
+	// 	b, err := files.Read(f, true)
+	// 	feedback.HandleFatalErr(err)
 
-	pk, _, _, _, err := ssh.ParseAuthorizedKey(b)
-	feedback.HandleFatalErr(err)
+	// 	pk, _, _, _, err := ssh.ParseAuthorizedKey(b)
+	// 	feedback.HandleFatalErr(err)
 
-	ppk, err := ssh.ParsePublicKey(pk.Marshal())
-	feedback.HandleFatalErr(err)
+	// 	ppk, err := ssh.ParsePublicKey(pk.Marshal())
+	// 	feedback.HandleFatalErr(err)
 
-	fp := ssh.FingerprintSHA256(ppk)
+	// 	fp := ssh.FingerprintSHA256(ppk)
 
-	art := randomart.FromString(fp)
+	// 	art := randomart.FromString(fp)
 
-	feedback.Print(feedback.Info, false, "%s", art)
+	// 	feedback.Print(feedback.Info, false, "%s", art)
 
-	pre := randomart.Transform("", "SHA256", 256, []byte(fp))
+	// 	pre := randomart.Transform("", "SHA256", 256, []byte(fp))
 
-	feedback.Print(feedback.Info, false, "%s", pre)
+	// feedback.Print(feedback.Info, false, "%s", pre)
 }

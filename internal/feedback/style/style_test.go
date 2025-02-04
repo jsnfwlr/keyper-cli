@@ -40,7 +40,7 @@ func TestStyle(t *testing.T) {
 		},
 		{
 			styles:   []style.Attribute{style.RedFG, style.Bold, style.GreenFG},
-			expected: "\033[31;1mStyle\033[0m Test",
+			expected: "\033[32;1mStyle\033[0m Test",
 		},
 		{
 			styles:   []style.Attribute{style.RedFG, style.Bold, style.GreenBG},
