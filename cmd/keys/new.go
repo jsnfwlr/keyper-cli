@@ -81,13 +81,13 @@ func NewRun(cmd *cobra.Command, args []string) {
 
 	fmt.Printf("%s public/private %s key pair.\n", strings.Join(x, " and "), keyType)
 
-	pk, fp, err := keys.Generate(ctx, file, keyType, comment, passphrase, bitSize)
+	pub, fp, err := keys.Generate(ctx, file, keyType, comment, passphrase, bitSize)
 	feedback.HandleFatalErr(err)
 
 	feedback.Print(feedback.Info, false, "Your identification has been saved in %s", file)
 	feedback.Print(feedback.Info, false, "Your public key has been saved in %s.pub", file)
 	feedback.Print(feedback.Info, false, "The key fingerprint is:\n%s %s", fp, comment)
-	feedback.Print(feedback.Extra, false, "Public key:\n%s", strings.TrimSpace(pk))
+	feedback.Print(feedback.Extra, false, "Public key:\n%s", strings.TrimSpace(pub))
 
 	_, err = exec.LookPath("ssh-keygen")
 	if err == nil {
@@ -149,7 +149,7 @@ func NewRun(cmd *cobra.Command, args []string) {
 	}
 
 	nkk.Name = comment
-	nkk.Key = strings.TrimSpace(pk)
+	nkk.Key = strings.TrimSpace(pub)
 	nkk.Fingerprint = fp
 
 	if len(nkk.HostGroups) == 0 {

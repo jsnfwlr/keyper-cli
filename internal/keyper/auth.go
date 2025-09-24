@@ -1,6 +1,6 @@
 package keyper
 
-type authRequest struct {
+type AuthRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
@@ -21,7 +21,7 @@ type authResponse struct {
 }
 
 func (c *Client) Auth() error {
-	payload := &authRequest{
+	payload := &AuthRequest{
 		Username: c.config.Username,
 		Password: c.config.Password,
 	}

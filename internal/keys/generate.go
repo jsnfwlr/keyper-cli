@@ -28,13 +28,13 @@ func Generate(ctx context.Context, filePath, keyType, comment, passphrase string
 		if err != nil {
 			return "", "", fmt.Errorf("could not generate ED25519 key: %w", err)
 		}
-	case "ed25519-sk":
-		pKey, err = GetKeyFromSK(keyType, size)
-		if err != nil {
-			return "", "", fmt.Errorf("could not get ED25519-SK key: %w", err)
-		}
+	// case "ed25519-sk":
+	// 	pKey, err = GetKeyFromSK(keyType, size)
+	// 	if err != nil {
+	// 		return "", "", fmt.Errorf("could not get ED25519-SK key: %w", err)
+	// 	}
 
-		justPub = true
+	// 	justPub = true
 
 	case "rsa":
 		var secretKey *rsa.PrivateKey
@@ -45,13 +45,13 @@ func Generate(ctx context.Context, filePath, keyType, comment, passphrase string
 
 		pKey = secretKey.Public()
 		sKey = secretKey
-	case "rsa-sk":
-		pKey, err = GetKeyFromSK(keyType, size)
-		if err != nil {
-			return "", "", fmt.Errorf("could not get RSA%d-SK key: %w", size, err)
-		}
+	// case "rsa-sk":
+	// 	pKey, err = GetKeyFromSK(keyType, size)
+	// 	if err != nil {
+	// 		return "", "", fmt.Errorf("could not get RSA%d-SK key: %w", size, err)
+	// 	}
 
-		justPub = true
+	// 	justPub = true
 	case "ecdsa":
 		var secretKey *ecdsa.PrivateKey
 		var ec elliptic.Curve
@@ -74,13 +74,13 @@ func Generate(ctx context.Context, filePath, keyType, comment, passphrase string
 		pKey = secretKey.Public()
 		sKey = secretKey
 
-	case "ecdsa-sk":
-		pKey, err = GetKeyFromSK(keyType, size)
-		if err != nil {
-			return "", "", fmt.Errorf("could not get ECDSA%d-SK key: %w", size, err)
-		}
+	// case "ecdsa-sk":
+	// 	pKey, err = GetKeyFromSK(keyType, size)
+	// 	if err != nil {
+	// 		return "", "", fmt.Errorf("could not get ECDSA%d-SK key: %w", size, err)
+	// 	}
 
-		justPub = true
+	// 	justPub = true
 
 	default:
 		return "", "", fmt.Errorf("unsupported key type: %s", keyType)
